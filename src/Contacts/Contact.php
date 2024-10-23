@@ -65,18 +65,21 @@ class Contact extends Resource
      *
      * @return array<Enrolment>
      */
-    public function enrolments()
+    public function enrolments(array $params = [])
     {
-        $response = $this->manager->getConnection()->get('contact/enrolments/' . $this->id, []);
+        $response = $this->manager->getConnection()->get('contact/enrolments/' . $this->id, $params);
 
         return $response ? $response : [];
     }
 
-    public function courseEnrolments()
+    public function courseEnrolments(array $params = [])
     {
-        $response = $this->manager->getConnection()->get('course/enrolments', [
-            'contactID' => $this->id,
-        ]);
+        if(empty($params)) {
+            $params = [
+                'contactID' => $this->id,
+            ];
+        }
+        $response = $this->manager->getConnection()->get('course/enrolments', $params);
 
         return $response ? $response : [];
     }
