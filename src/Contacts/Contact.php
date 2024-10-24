@@ -74,11 +74,7 @@ class Contact extends Resource
 
     public function courseEnrolments(array $params = [])
     {
-        if(empty($params)) {
-            $params = [
-                'contactID' => $this->id,
-            ];
-        }
+        $params = array_merge($params, ['contactID' => $this->id]);
         $response = $this->manager->getConnection()->get('course/enrolments', $params);
 
         return $response ? $response : [];
